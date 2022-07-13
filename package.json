@@ -1,6 +1,6 @@
 {
-  "name": "template-vue",
-  "version": "0.0.0",
+  "name": "movies-app",
+  "version": "0.0.7",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",

@@ -1,53 +1,31 @@
-import { MovieGenreType, LanguageType, MovieType, RatedType } from '../Enums';
-import { IFullMovieModel, IRatingInfo } from './interfaces/IFullMovieModel';
-import { IFullTextMovieModel } from './interfaces/ITextFullMovieModel';
+import { FullMovie, MovieRating } from "@/modules/movie/types/fullMovie";
+import { MovieGenre, MovieLanguage, MovieRated } from "@/modules/movie/types/movieEnums";
+import { FullMovieResponce } from "../movieResponce";
+import { MovieImpl } from "./movieImpl";
 
-export class MovieModel implements
 
-export class FullMovieModel implements IFullMovieModel {
-  // #region Private variables
-  private _actors: string[];
-  private _awards: string;
-  private _boxOffice: number | undefined;
-  private _country: string;
-  private _dvd: Date | undefined;
-  private _director: string;
-  private _genre: MovieGenreType[];
-  private _language: LanguageType;
-
-  private _released: Date | undefined;
-
-  private _imdbVotes: number;
-
-  private _imdbRating: number;
-
-  private _imdbID: string;
-
-  private _year: number;
-
-  private _writers: string[];
-
-  private _website: string;
-
-  private _type: MovieType;
-
-  private _title: string;
-
-  private _runtime: number;
-
-  private _response: boolean;
-
-  private _ratings: IRatingInfo[];
-
-  private _rated: RatedType;
-
-  private _production: string;
-
-  private _poster: string;
-
-  private _plot: string;
-
-  private _metascore: number | undefined;
+export class FullMovieImpl extends MovieImpl implements FullMovie {
+  // #region Protected variables
+  protected _actors: string[];
+  protected _awards: string;
+  protected _boxOffice: number | undefined;
+  protected _country: string;
+  protected _dvd: Date | undefined;
+  protected _director: string;
+  protected _genre: MovieGenre[];
+  protected _language: MovieLanguage;
+  protected _released: Date | undefined;
+  protected _imdbVotes: number;
+  protected _imdbRating: number;
+  protected _writers: string[];
+  protected _website: string;
+  protected _runtime: number;
+  protected _response: boolean;
+  protected _ratings: MovieRating[];
+  protected _rated: MovieRated | undefined;
+  protected _production: string;
+  protected _plot: string;
+  protected _metascore: number | undefined;
   // #endregion
 
   // #region Public Getters
@@ -75,11 +53,11 @@ export class FullMovieModel implements IFullMovieModel {
     return this._director;
   }
 
-  public get genre(): MovieGenreType[] {
+  public get genre(): MovieGenre[] {
     return this._genre;
   }
 
-  public get language(): LanguageType {
+  public get language(): MovieLanguage {
     return this._language;
   }
 
@@ -91,19 +69,15 @@ export class FullMovieModel implements IFullMovieModel {
     return this._plot;
   }
 
-  public get poster(): string {
-    return this._poster;
-  }
-
   public get production(): string {
     return this._production;
   }
 
-  public get rated(): RatedType {
+  public get rated(): MovieRated {
     return this._rated;
   }
 
-  public get ratings(): IRatingInfo[] {
+  public get ratings(): MovieRating[] {
     return this._ratings;
   }
 
@@ -119,28 +93,12 @@ export class FullMovieModel implements IFullMovieModel {
     return this._runtime;
   }
 
-  public get title(): string {
-    return this._title;
-  }
-
-  public get type(): MovieType {
-    return this._type;
-  }
-
   public get website(): string {
     return this._website;
   }
 
   public get writers(): string[] {
     return this._writers;
-  }
-
-  public get year(): number {
-    return this._year;
-  }
-
-  public get imdbID(): string {
-    return this._imdbID;
   }
 
   public get imdbRating(): number {
@@ -152,7 +110,7 @@ export class FullMovieModel implements IFullMovieModel {
   }
   // #endregion
 
-  // #region Private settes
+  // #region protected setters
   setActors(value: string) {
     this._actors = value.split(',').map((item) => item.trim());
     if (this._actors.length == 0) {
@@ -191,8 +149,8 @@ export class FullMovieModel implements IFullMovieModel {
 
   setGenre(value: string) {
     try {
-      const genres: MovieGenreType[] = value.split(',').map((item) => item.trim()).reduce((acc, el) => {
-        acc.push(MovieGenreType[el]);
+      const genres: MovieGenre[] = value.split(',').map((item) => item.trim()).reduce((acc, el) => {
+        acc.push(MovieGenre[el]);
         return acc;
       }, []);
       this._genre = genres;
@@ -203,7 +161,7 @@ export class FullMovieModel implements IFullMovieModel {
 
   setLanguage(value: string) {
     try {
-      this._language = LanguageType[value];
+      this._language = MovieLanguage[value];
     } catch {
       throw new Error('Error language');
     }
@@ -221,22 +179,21 @@ export class FullMovieModel implements IFullMovieModel {
     this._plot = value || 'N/a';
   }
 
-  setPoster(value: string) {
-    this._poster = value || 'N/a';
-  }
-
   setProduction(value: string) {
     this._production = value || 'N/a';
   }
 
   setRated(value: string) {
     try {
-      const simpleValue = value.replace('-', '');
-      const rated = RatedType[simpleValue];
-      if (!rated) {
-        throw new Error();
+      if (value === 'N/a') {
+        this._rated = undefined
+        return
       }
-      this._rated = rated;
+      const simpleValue = value.replace('-', '');
+      this._rated = MovieRated[simpleValue];
+      if (!this._rated) {
+        throw new Error('rated is undefined')
+      }
     } catch {
       throw new Error('Error rated');
     }
@@ -245,7 +202,7 @@ export class FullMovieModel implements IFullMovieModel {
   setRatings(value: Record<string, string>[]) {
     try {
       this._ratings = value.reduce((acc, el) => {
-        const obj: IRatingInfo = {
+        const obj: MovieRating = {
           source: el.Source,
           value: el.Value,
         };
@@ -281,48 +238,12 @@ export class FullMovieModel implements IFullMovieModel {
     }
   }
 
-  setTitle(value: string) {
-    if (!value || value === '') {
-      throw new Error('Error title');
-    }
-    this._title = value;
-  }
-
-  setType(value: string) {
-    try {
-      this._type = MovieType[value.charAt(0).toUpperCase() + value.slice(1)];
-      if (!this._type) {
-        throw new Error();
-      }
-    } catch {
-      throw new Error('Error type');
-    }
-  }
-
   setWebsite(value: string) {
     this._website = value || 'N/a';
   }
 
   setWriters(value: string) {
     this._writers = value.split(',').map((item) => item.trim());
-  }
-
-  setYear(value: string) {
-    let year = 0;
-    try {
-      year = Number.parseInt(value);
-    } catch {
-      throw new Error('Error runtime');
-    }
-    const maxYear = new Date().getFullYear() + 10;
-    if (year < 1800 || year > maxYear) {
-      throw new Error(`Error year format. Year must be in range [1800,${maxYear}]`);
-    }
-    this._year = year;
-  }
-
-  setImdbID(value: string) {
-    this._imdbID = value;
   }
 
   setImdbRating(value: string) {
@@ -344,35 +265,31 @@ export class FullMovieModel implements IFullMovieModel {
   }
   // #endregion
 
-  constructor(settings: IFullTextMovieModel) {
+  constructor(settings: FullMovieResponce) {
     try {
-      this.setImdbID(settings.imdbID);
+      super(settings);
       this.setActors(settings.Actors);
       this.setAwards(settings.Awards);
       this.setBoxOffice(settings.BoxOffice);
       this.setCountry(settings.Country);
       this.setDvd(settings.DVD);
-      this.setDirector(settings.director);
-      this.setGenre(settings.genre);
-      this.setLanguage(settings.language);
-      this.setMetascore(settings.metascore);
-      this.setPlot(settings.plot);
-      this.setPoster(settings.poster);
-      this.setProduction(settings.production);
-      this.setRated(settings.rated);
-      this.setRatings(settings.ratings);
-      this.setReleased(settings.released);
-      this.setResponse(settings.response);
-      this.setRuntime(settings.runtime);
-      this.setTitle(settings.title);
-      this.setType(settings.type);
-      this.setWebsite(settings.website);
-      this.setWriters(settings.writers);
-      this.setYear(settings.year);
+      this.setDirector(settings.Director);
+      this.setGenre(settings.Genre);
+      this.setLanguage(settings.Language);
+      this.setMetascore(settings.Metascore);
+      this.setPlot(settings.Plot);
+      this.setProduction(settings.Production);
+      this.setRated(settings.Rated);
+      this.setRatings(settings.Ratings);
+      this.setReleased(settings.Released);
+      this.setResponse(settings.Response);
+      this.setRuntime(settings.Runtime);
+      this.setWebsite(settings.Website);
+      this.setWriters(settings.Writer);
       this.setImdbRating(settings.imdbRating);
       this.setImdbVotes(settings.imdbVotes);
     } catch (e) {
-      throw new Error(`Full movie info in ${this.imdbID}\n${e}`);
+      throw new Error(`Full movie info in ${settings.imdbID}\n${e}`);
     }
   }
 }

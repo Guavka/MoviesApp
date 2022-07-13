@@ -1,4 +1,4 @@
-export interface ITextMovieModel {
+export interface MovieResponce {
   Title: string,
   Year: string,
   imdbID: string,
@@ -6,7 +6,7 @@ export interface ITextMovieModel {
   Poster: string,
 }
 
-export interface IFullTextMovieModel extends ITextMovieModel {
+export interface FullMovieResponce extends MovieResponce {
   Actors: string,
   Awards: string,
   BoxOffice: string,
@@ -29,8 +29,8 @@ export interface IFullTextMovieModel extends ITextMovieModel {
   imdbVotes: string
 }
 
-export interface ISeachMovieModel {
-  search: Record<string, ITextMovieModel>,
-  totalResults: number,
-  response: boolean
+export interface SearchMovieResponce {
+  Search: MovieResponce[],
+  totalResults: string,
+  Response: string
 }
