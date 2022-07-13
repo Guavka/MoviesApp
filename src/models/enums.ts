@@ -6,7 +6,8 @@ export enum MovieGenreType {
 
 export enum MovieType {
   Movie = 'movie',
-  Serial = 'serial'
+  Serial = 'serial',
+  Episode = 'episode'
 }
 
 export enum LanguageType {
@@ -20,4 +21,9 @@ export enum RatedType {
   R = 'R',
   NR = 'NR',
   Approved = 'Approved'
+}
+
+export enum MovieInfoType {
+  Short = 'short',
+  Full = 'full'
 }

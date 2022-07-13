@@ -1,4 +1,4 @@
-import { LanguageType, MovieGenreType, MovieType, RatedType } from '../../enums';
+import { LanguageType, MovieGenreType, MovieType, RatedType } from '../../Enums';
 
 export interface IMoviesObjectInfo {
   id: string,
@@ -10,7 +10,15 @@ export interface IRatingInfo {
   value: string
 }
 
-export interface IFullMovieModel {
+export interface IMovieModel {
+  get year(): number
+  get title(): string
+  get imdbID(): string
+  get type(): MovieType
+  get poster(): string
+}
+
+export interface IFullMovieModel extends IMovieModel {
   get actors(): string[]
   get awards(): string
   get boxOffice(): number | undefined
@@ -22,18 +30,13 @@ export interface IFullMovieModel {
   get released(): Date | undefined
   get imdbVotes(): number
   get imdbRating(): number
-  get imdbID(): string
-  get year(): number
   get writers(): string[]
   get website(): string
-  get type(): MovieType
-  get title(): string
   get runtime(): number
   get response(): boolean
   get ratings(): IRatingInfo[]
   get rated(): RatedType
   get production(): string
-  get poster(): string
   get plot(): string
   get metascore(): number | undefined
 }

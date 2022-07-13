@@ -1,27 +1,36 @@
-export interface ITextFullMovieModel {
-  actors: string,
-  awards: string,
-  boxOffice: string,
-  country: string,
-  dvd: string,
-  director: string,
-  genre: string,
-  language: string,
-  metascore: string,
-  plot: string,
-  poster: string,
-  production: string,
-  rated: string,
-  ratings: Record<string, string>[],
-  released: string,
-  response: string,
-  runtime: string,
-  title: string,
-  type: string,
-  website: string,
-  writers: string,
-  year: string,
+export interface ITextMovieModel {
+  Title: string,
+  Year: string,
   imdbID: string,
+  Type: string,
+  Poster: string,
+}
+
+export interface IFullTextMovieModel extends ITextMovieModel {
+  Actors: string,
+  Awards: string,
+  BoxOffice: string,
+  Country: string,
+  DVD: string,
+  Director: string,
+  Genre: string,
+  Language: string,
+  Metascore: string,
+  Plot: string,
+  Production: string,
+  Rated: string,
+  Ratings: Record<string, string>[],
+  Released: string,
+  Response: string,
+  Runtime: string,
+  Website: string,
+  Writer: string,
   imdbRating: string,
   imdbVotes: string
+}
+
+export interface ISeachMovieModel {
+  search: Record<string, ITextMovieModel>,
+  totalResults: number,
+  response: boolean
 }

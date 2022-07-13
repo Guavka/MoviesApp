@@ -1,6 +1,8 @@
-import { MovieGenreType, LanguageType, MovieType, RatedType } from '../enums';
+import { MovieGenreType, LanguageType, MovieType, RatedType } from '../Enums';
 import { IFullMovieModel, IRatingInfo } from './interfaces/IFullMovieModel';
-import { ITextFullMovieModel } from './interfaces/ITextFullMovieModel';
+import { IFullTextMovieModel } from './interfaces/ITextFullMovieModel';
+
+export class MovieModel implements
 
 export class FullMovieModel implements IFullMovieModel {
   // #region Private variables
@@ -342,14 +344,14 @@ export class FullMovieModel implements IFullMovieModel {
   }
   // #endregion
 
-  constructor(settings: ITextFullMovieModel) {
+  constructor(settings: IFullTextMovieModel) {
     try {
       this.setImdbID(settings.imdbID);
-      this.setActors(settings.actors);
-      this.setAwards(settings.awards);
-      this.setBoxOffice(settings.boxOffice);
-      this.setCountry(settings.country);
-      this.setDvd(settings.dvd);
+      this.setActors(settings.Actors);
+      this.setAwards(settings.Awards);
+      this.setBoxOffice(settings.BoxOffice);
+      this.setCountry(settings.Country);
+      this.setDvd(settings.DVD);
       this.setDirector(settings.director);
       this.setGenre(settings.genre);
       this.setLanguage(settings.language);
