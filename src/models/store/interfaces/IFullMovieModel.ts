@@ -1,6 +1,4 @@
-import {
-  LanguageType, MovieGenreType, MovieType, RatedType,
-} from '../enums';
+import { LanguageType, MovieGenreType, MovieType, RatedType } from '../../enums';
 
 export interface IMoviesObjectInfo {
   id: string,
@@ -10,34 +8,6 @@ export interface IMoviesObjectInfo {
 export interface IRatingInfo {
   source: string,
   value: string
-}
-
-export interface ITextFullMovieModel {
-  actors: string,
-  awards: string,
-  boxOffice: string,
-  country: string,
-  dvd: string,
-  director: string,
-  genre: string,
-  language: string,
-  metascore: string,
-  plot: string,
-  poster: string,
-  production: string,
-  rated: string,
-  ratings: Record<string, string>[],
-  released: string,
-  response: string,
-  runtime: string,
-  title: string,
-  type: string,
-  website: string,
-  writers: string,
-  year: string,
-  imdbID: string,
-  imdbRating: string,
-  imdbVotes: string
 }
 
 export interface IFullMovieModel {

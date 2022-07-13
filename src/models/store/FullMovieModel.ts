@@ -1,25 +1,16 @@
-import {
-  MovieGenreType, LanguageType, MovieType, RatedType,
-} from '../enums';
-import { IFullMovieModel, IRatingInfo } from './IFullMovieModel';
-import { ITextFullMovieModel } from './ITextFullMovieModel';
+import { MovieGenreType, LanguageType, MovieType, RatedType } from '../enums';
+import { IFullMovieModel, IRatingInfo } from './interfaces/IFullMovieModel';
+import { ITextFullMovieModel } from './interfaces/ITextFullMovieModel';
 
 export class FullMovieModel implements IFullMovieModel {
   // #region Private variables
   private _actors: string[];
-
   private _awards: string;
-
   private _boxOffice: number | undefined;
-
   private _country: string;
-
   private _dvd: Date | undefined;
-
   private _director: string;
-
   private _genre: MovieGenreType[];
-
   private _language: LanguageType;
 
   private _released: Date | undefined;
