@@ -1,0 +1,33 @@
+{
+  "files": [],
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "types": [
+      "vite/client",
+      "element-plus/global",
+      "unplugin-icons/types/vue"
+    ],
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+  },
+  "include": [
+    "src",
+    "configs"
+  ],
+  "references": [
+    {
+      "path": "./configs/ts/tsconfig.config.json"
+    },
+    {
+      "path": "./configs/ts/tsconfig.app.json"
+    },
+    {
+      "path": "./configs/ts/tsconfig.vitest.json"
+    }
+  ]
+}
