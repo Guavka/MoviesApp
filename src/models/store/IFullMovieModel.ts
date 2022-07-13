@@ -1,4 +1,6 @@
-import { LanguageType, MovieGenreType, MovieType, RatedType } from "../enums"
+import {
+  LanguageType, MovieGenreType, MovieType, RatedType,
+} from '../enums';
 
 export interface IMoviesObjectInfo {
   id: string,
