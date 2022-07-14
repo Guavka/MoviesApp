@@ -40,39 +40,49 @@ export class MovieImpl implements Movie {
   // #region Protected setters  
 
   protected setPoster(value: string) {
-    this._poster = value || 'N/a';
+    this._poster = value;
   }
 
   protected setTitle(value: string) {
-    if (!value || value === '') {
-      throw new Error('Error title');
+    try {
+      if (!value || value === '') {
+        throw new Error();
+      }
+      this._title = value;
     }
-    this._title = value;
+    catch (e) {
+      throw new Error(`Error "title". Value = ${value}\n${e.message}`)
+    }
   }
 
   protected setType(value: string) {
     try {
       this._type = MovieType[value.toUpperCase()];
       if (!this._type) {
-        throw new Error('value=' + value);
+        throw new Error();
       }
     } catch (e) {
-      throw new Error('Error type:\n' + e.message);
+      throw new Error(`Error "type". Value = ${value}\n${e.message}`);
     }
   }
 
   protected setYear(value: string) {
-    let year = 0;
     try {
-      year = Number.parseInt(value);
-    } catch {
-      throw new Error('Error runtime');
+      let year = 0;
+      try {
+        year = Number.parseInt(value);
+      } catch {
+        throw new Error(`Error runtime`);
+      }
+      const maxYear = new Date().getFullYear() + 10;
+      if (year < 1800 || year > maxYear) {
+        throw new Error(`Error year format. Year must be in range [1800,${maxYear}]`);
+      }
+      this._year = year;
     }
-    const maxYear = new Date().getFullYear() + 10;
-    if (year < 1800 || year > maxYear) {
-      throw new Error(`Error year format. Year must be in range [1800,${maxYear}]`);
+    catch (e) {
+      throw new Error(`Error "year". Value = ${value}\n${e.message}`)
     }
-    this._year = year;
   }
 
   protected setImdbID(value: string) {

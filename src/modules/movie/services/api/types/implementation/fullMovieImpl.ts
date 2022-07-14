@@ -112,14 +112,19 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
 
   // #region protected setters
   setActors(value: string) {
-    this._actors = value.split(',').map((item) => item.trim());
-    if (this._actors.length == 0) {
-      throw new Error('actors is empty');
+    try {
+      this._actors = value.split(',').map((item) => item.trim());
+      if (this._actors.length == 0) {
+        throw new Error('actors is empty');
+      }
+    }
+    catch (e) {
+      throw new Error(`Error "actors". Value = ${value}\n${e.message}`)
     }
   }
 
   setAwards(value: string) {
-    this._awards = value || '';
+    this._awards = value;
   }
 
   setBoxOffice(value: string) {
@@ -132,19 +137,33 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   }
 
   setCountry(value: string) {
-    this._country = value;
+    try {
+      if (value === '') {
+        throw new Error()
+      }
+      this._country = value;
+    } catch (e) {
+      throw new Error(`Error "title". Value = ${value}\n${e.message}`)
+    }
   }
 
   setDvd(value: string) {
     try {
       this._dvd = value !== undefined ? new Date(value) : undefined;
-    } catch {
-      throw new Error('Error dvd date');
+    } catch (e) {
+      throw new Error(`Error "DVD". Value = ${value}\n${e.message}`)
     }
   }
 
   setDirector(value: string) {
-    this._director = value;
+    try {
+      if (value === '') {
+        throw new Error()
+      }
+      this._director = value;
+    } catch (e) {
+      throw new Error(`Error "director". Value = ${value}\n${e.message}`)
+    }
   }
 
   setGenre(value: string) {
@@ -154,38 +173,52 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
         return acc;
       }, []);
       this._genre = genres;
-    } catch {
-      throw new Error('Error genre');
+    } catch (e) {
+      throw new Error(`Error "genre". Value = ${value}\n${e.message}`);
     }
   }
 
   setLanguage(value: string) {
     try {
       this._language = MovieLanguage[value];
-    } catch {
-      throw new Error('Error language');
+    } catch (e) {
+      throw new Error(`Error "language". Value = ${value}\n${e.message}`);
     }
   }
 
   setMetascore(value: string) {
     try {
       this._metascore = Number.parseInt(value);
-    } catch {
-      throw new Error('Error metascore');
+    } catch (e) {
+      throw new Error(`Error "metascore". Value = ${value}\n${e.message}`);
     }
   }
 
   setPlot(value: string) {
-    this._plot = value || 'N/a';
+    try {
+      if (value === '') {
+        throw new Error()
+      }
+      this._plot = value;
+    } catch (e) {
+      throw new Error(`Error "plot". Value = ${value}\n${e.message}`)
+    }
   }
 
   setProduction(value: string) {
-    this._production = value || 'N/a';
+    try {
+      if (value === '') {
+        throw new Error()
+      }
+      this._production = value;
+    } catch (e) {
+      throw new Error(`Error "production". Value = ${value}\n${e.message}`)
+    }
   }
 
   setRated(value: string) {
     try {
-      if (value === 'N/a') {
+      if (value.toLowerCase() === 'n/a') {
         this._rated = undefined
         return
       }
@@ -194,8 +227,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       if (!this._rated) {
         throw new Error('rated is undefined')
       }
-    } catch {
-      throw new Error('Error rated');
+    } catch (e) {
+      throw new Error(`Error "rated". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -209,49 +242,62 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
         acc.push(obj);
         return acc;
       }, []);
-    } catch {
-      throw new Error('Error ratings');
+    } catch (e) {
+      throw new Error(`Error "ratings". Value = ${value}\n${e.message}`);
     }
   }
 
   setReleased(value: string) {
     try {
       this._released = value !== undefined ? new Date(value) : undefined;
-    } catch {
-      throw new Error('Error realised date');
+    } catch (e) {
+      throw new Error(`Error "released". Value = ${value}\n${e.message}`);
     }
   }
 
   setResponse(value: string) {
     try {
       this._response = Boolean(value);
-    } catch {
-      throw new Error('Error response');
+    } catch (e) {
+      throw new Error(`Error "response". Value = ${value}\n${e.message}`);
     }
   }
 
   setRuntime(value: string) {
     try {
       this._runtime = Number.parseInt(value);
-    } catch {
-      throw new Error('Error runtime');
+    } catch (e) {
+      throw new Error(`Error "runtime". Value = ${value}\n${e.message}`);
     }
   }
 
   setWebsite(value: string) {
-    this._website = value || 'N/a';
+    try {
+      if (value === '') {
+        throw new Error()
+      }
+      this._website = value;
+    } catch (e) {
+      throw new Error(`Error "website". Value = ${value}\n${e.message}`)
+    }
   }
 
   setWriters(value: string) {
-    this._writers = value.split(',').map((item) => item.trim());
+    try {
+      if (value === '') {
+        throw new Error()
+      }
+      this._writers = value.split(',').map((item) => item.trim());
+    } catch (e) {
+      throw new Error(`Error "writers". Value = ${value}\n${e.message}`)
+    }
   }
 
   setImdbRating(value: string) {
     try {
-      const imdbRating = Number.parseFloat(value);
-      this._imdbRating = imdbRating;
-    } catch {
-      throw new Error('Error ImdbRating');
+      this._imdbRating = Number.parseFloat(value);
+    } catch (e) {
+      throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -259,8 +305,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       const imdbVotes = Number.parseFloat(value.replace(/,/g, ''));
       this._imdbVotes = imdbVotes;
-    } catch {
-      throw new Error('Error ImdbVotes');
+    } catch (e) {
+      throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
     }
   }
   // #endregion

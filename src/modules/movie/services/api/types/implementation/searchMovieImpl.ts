@@ -27,14 +27,14 @@ export class SearchMovieImpl implements SearchMovie {
     try {
       this._totalResults = Number.parseInt(value);
     } catch (e) {
-      throw new Error('Error total results\n' + e.message);
+      throw new Error(`Error "total results". Value = ${value}\n` + e.message);
     }
   }
   protected setResponse(value: string) {
     try {
       this._response = Boolean(value);
     } catch (e) {
-      throw new Error('Error response' + e.message);
+      throw new Error(`Error "response". Value = ${value}\n` + e.message);
     }
   }
   protected setSearch(value: MovieResponce[]) {
@@ -45,7 +45,7 @@ export class SearchMovieImpl implements SearchMovie {
       })
       this._search = result
     } catch (e) {
-      throw new Error('Error search' + e.message);
+      throw new Error(`Error "search". Value = ${value}\n` + e.message);
     }
   }
   // #endregion
