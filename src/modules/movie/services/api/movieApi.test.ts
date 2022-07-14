@@ -3,7 +3,7 @@ import MovieApi from './movieApi'
 import { SearchMovieImpl } from './types/implementation/searchMovieImpl'
 import { IdMovieParams, SearchMovieParams, TitleMovieParams } from './types/movieApiSettings'
 
-describe('getMovieById', () => {
+describe('test api', () => {
   test('get movie by  id', async () => {
     const settings: IdMovieParams = {
       i: 'tt5032026'
