@@ -223,7 +223,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
         return
       }
       const simpleValue = value.replace('-', '');
-      this._rated = MovieRated[simpleValue];
+      this._rated = MovieRated[simpleValue.toUpperCase()];
       if (!this._rated) {
         throw new Error('rated is undefined')
       }
