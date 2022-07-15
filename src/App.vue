@@ -7,13 +7,9 @@ store.fetchMovies()
 </script>
 
 <template>
-  <header>
-
-  </header>
-
-  <main>
-
-  </main>
+  <ElMain>
+    <MoviesList :list="store.movies"></MoviesList>
+  </ElMain>
 </template>
 
 <style scoped>
