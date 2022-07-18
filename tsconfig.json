@@ -1,26 +1,5 @@
-{
+{  
   "files": [],
-  "compilerOptions": {
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "types": [
-      "vite/client",
-      "element-plus/global",
-      "unplugin-icons/types/vue",
-    ],
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    }
-  },
-  "include": [
-    "src",
-    "configs",
-    "env.d.ts",
-    "cypress.d.ts"
-  ],
   "references": [
     {
       "path": "./configs/ts/tsconfig.config.json"

@@ -33,7 +33,6 @@ const posterBg = computed(() => {
   margin-bottom: 1rem;
   height: 300px;
 
-
   .movie-item-poster {
     position: absolute;
     top: 0;

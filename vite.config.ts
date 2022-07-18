@@ -23,7 +23,7 @@ const autoImportPath = fileURLToPath(new URL('configs/autoImport', srcURL))
 // https://vitejs.dev/config/
 export default defineConfig({
   test: {
-    globals: false,
+    globals: true,
     environment: 'happy-dom'
   },
   plugins: [
