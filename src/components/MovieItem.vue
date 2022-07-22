@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { FullMovie } from '@/modules/movie/types/fullMovie';
+import type { FullMovie } from '@/modules/movie/types/fullMovie';
 interface Prop {
   movie: FullMovie
 }

@@ -3,10 +3,6 @@ import { mount } from 'cypress/vue'
 
 describe('MovieItem.cy.ts', () => {
   it('mount', () => {
-    mount(MovieItem, {
-      propsData: {
-        movie: 'Hello'
-      }
-    })
+    mount(MovieItem)
   })
 })

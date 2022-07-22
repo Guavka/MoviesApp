@@ -1,17 +1,26 @@
 {
+  "extends": "@vue/tsconfig/tsconfig.node.json",
+  "include": [
+    "cypress.config.*",
+    "env.d.ts",
+    "src/App.vue",
+    "src/main.ts",
+    "src/modules/**/*.ts",
+    "src/plugins/**/*.ts",
+    "src/components/**/*.vue",
+    "configs/autoImport/**/*.ts"
+  ],
   "compilerOptions": {
     "paths": {
       "@/*": [
         "./src/*"
       ]
-    }
-  },
-  "references": [
-    {
-      "path": "./configs/ts/tsconfig.config.json"
     },
-    {
-      "path": "./configs/ts/tsconfig.app.json"
-    }
-  ]
+    "types": [
+      "vite/client",
+      "element-plus/global",
+      "unplugin-icons/types/vue",
+      "vitest/globals"
+    ]
+  }
 }
