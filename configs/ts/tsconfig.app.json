@@ -7,24 +7,19 @@
     "src/plugins/**/*.ts",
     "src/components/**/*.vue",
   ],
-  "exclude": [
-    "src/modules/**/__tests__/*"
-  ],
   "compilerOptions": {
     "composite": true,
     "importHelpers": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "module": "ESNext",
+    "moduleResolution": "Node",
     "types": [
+      "node",
       "vite/client",
       "element-plus/global",
       "unplugin-icons/types/vue",
       "vitest/globals"
-    ],
-    "paths": {
-      "@/*": [
-        "src/*"
-      ]
-    }
+    ]
   }
 }
