@@ -59,11 +59,9 @@ export class MovieImpl implements Movie {
   protected setType(value: string) {
     try {
       value = value.toUpperCase()
-      if ((<string[]>Object.values(MovieType)).includes(value)) {
-        this._type = MovieType.EPISODE;
-      }
-      if (!this._type) {
-        throw new Error();
+      if (value in MovieType) {
+        const index = Object.keys(MovieType).indexOf(value);
+        this._type = Object.values(MovieType)[index]
       }
     } catch (e) {
       if (e instanceof Error)

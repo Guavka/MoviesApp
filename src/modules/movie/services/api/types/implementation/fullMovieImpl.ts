@@ -172,10 +172,15 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
 
   setGenre(value: string) {
     try {
+      const result: MovieGenre[] = []
       const genres: MovieGenre[] = value.split(',').map((item) => item.trim()).reduce((acc, el) => {
-        acc.push(MovieGenre[el]);
+        if (el.toUpperCase() in MovieGenre) {
+          const index = Object.keys(MovieGenre).indexOf(el.toUpperCase());
+          const genre = Object.values(MovieGenre)[index]
+          acc.push(genre)
+        }
         return acc;
-      }, []);
+      }, result);
       this._genre = genres;
     } catch (e) {
       if (e instanceof Error)
@@ -185,7 +190,10 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
 
   setLanguage(value: string) {
     try {
-      this._language = MovieLanguage[value];
+      if (value.toUpperCase() in MovieLanguage) {
+        const index = Object.keys(MovieLanguage).indexOf(value.toUpperCase());
+        this._language = Object.values(MovieLanguage)[index]
+      }
     } catch (e) {
       if (e instanceof Error)
         throw new Error(`Error "language". Value = ${value}\n${e.message}`);
@@ -232,7 +240,10 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
         return
       }
       const simpleValue = value.replace('-', '');
-      this._rated = MovieRated[simpleValue.toUpperCase()];
+      if (simpleValue.toUpperCase() in MovieLanguage) {
+        const index = Object.keys(MovieRated).indexOf(simpleValue.toUpperCase());
+        this._rated = Object.values(MovieRated)[index]
+      }
       if (!this._rated) {
         throw new Error('rated is undefined')
       }
@@ -244,6 +255,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
 
   setRatings(value: Record<string, string>[]) {
     try {
+      const result: MovieRating[] = []
       this._ratings = value.reduce((acc, el) => {
         const obj: MovieRating = {
           source: el.Source,
@@ -251,7 +263,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
         };
         acc.push(obj);
         return acc;
-      }, []);
+      }, result);
     } catch (e) {
       if (e instanceof Error)
         throw new Error(`Error "ratings". Value = ${value}\n${e.message}`);
