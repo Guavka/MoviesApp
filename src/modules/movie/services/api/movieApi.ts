@@ -1,9 +1,9 @@
 import axios from "@/plugins/axios";
-import { FullMovie } from "../../types/fullMovie";
+import type { FullMovie } from "../../types/fullMovie";
 import { FullMovieImpl } from "./types/implementation/fullMovieImpl";
 import { SearchMovieImpl } from "./types/implementation/searchMovieImpl";
-import { MovieParams, IdMovieParams, TitleMovieParams, SearchMovieParams } from "./types/movieApiSettings";
-import { SearchMovieResponce, FullMovieResponce } from "./types/movieResponce";
+import type { MovieParams, IdMovieParams, TitleMovieParams, SearchMovieParams } from "./types/movieApiSettings";
+import type { SearchMovieResponce, FullMovieResponce } from "./types/movieResponce";
 
 
 async function request(settings: MovieParams) {
@@ -12,7 +12,8 @@ async function request(settings: MovieParams) {
     return response.data
   }
   catch (e) {
-    throw new Error('request\n' + e.message)
+    if (e instanceof Error)
+      throw new Error('request\n' + e.message)
   }
 }
 

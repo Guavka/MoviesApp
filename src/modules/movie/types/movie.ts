@@ -1,4 +1,4 @@
-import { MovieType } from './movieEnums';
+import type { MovieType } from './movieEnums';
 
 export interface Movie {
   get year(): number

@@ -1,15 +1,15 @@
 import { MovieType } from "@/modules/movie/types/movieEnums";
-import { Movie } from "@/modules/movie/types/movie";
-import { MovieResponce } from "../movieResponce";
+import type { Movie } from "@/modules/movie/types/movie";
+import type { MovieResponce } from "../movieResponce";
 
 export class MovieImpl implements Movie {
   // #region Protected variables
 
-  protected _title: string;
-  protected _year: number;
-  protected _imdbID: string;
-  protected _type: MovieType;
-  protected _poster: string;
+  protected _title!: string;
+  protected _year!: number;
+  protected _imdbID!: string;
+  protected _type!: MovieType;
+  protected _poster!: string;
 
   // #endregion
 
@@ -51,18 +51,23 @@ export class MovieImpl implements Movie {
       this._title = value;
     }
     catch (e) {
-      throw new Error(`Error "title". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "title". Value = ${value}\n${e.message}`)
     }
   }
 
   protected setType(value: string) {
     try {
-      this._type = MovieType[value.toUpperCase()];
+      value = value.toUpperCase()
+      if ((<string[]>Object.values(MovieType)).includes(value)) {
+        this._type = MovieType.EPISODE;
+      }
       if (!this._type) {
         throw new Error();
       }
     } catch (e) {
-      throw new Error(`Error "type". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "type". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -81,7 +86,8 @@ export class MovieImpl implements Movie {
       this._year = year;
     }
     catch (e) {
-      throw new Error(`Error "year". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "year". Value = ${value}\n${e.message}`)
     }
   }
 

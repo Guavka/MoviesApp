@@ -1,8 +1,8 @@
-import { MoviesState } from "./types/moviesStore";
+import type { MoviesState } from "./types/moviesStore";
 import mock from "./mock";
 import MovieApi from "../services/api/movieApi";
-import { FullMovie } from "../types/fullMovie";
-import { IdMovieParams } from "../services/api/types/movieApiSettings";
+import type { FullMovie } from "../types/fullMovie";
+import type { IdMovieParams } from "../services/api/types/movieApiSettings";
 import { MoviePlot } from "../types/movieEnums";
 
 const moviesState: MoviesState = {
@@ -42,7 +42,8 @@ export const useMoviesStore = defineStore('movies', {
         }, <Record<string, FullMovie>>{})
       }
       catch (e) {
-        throw new Error('fetchMovies\n' + e.message)
+        if (e instanceof Error)
+          throw new Error('fetchMovies\n' + e.message)
       }
     }
   },

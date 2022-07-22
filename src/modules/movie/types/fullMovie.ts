@@ -1,5 +1,5 @@
-import { MovieGenre, MovieLanguage, MovieRated } from "./movieEnums";
-import { Movie } from "./movie";
+import type { Movie } from "./movie";
+import type { MovieGenre, MovieLanguage, MovieRated } from "./movieEnums";
 
 export interface MovieRating {
   source: string,

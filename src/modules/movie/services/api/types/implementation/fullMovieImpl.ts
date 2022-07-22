@@ -1,30 +1,30 @@
-import { FullMovie, MovieRating } from "@/modules/movie/types/fullMovie";
+import type { FullMovie, MovieRating } from "@/modules/movie/types/fullMovie";
 import { MovieGenre, MovieLanguage, MovieRated } from "@/modules/movie/types/movieEnums";
-import { FullMovieResponce } from "../movieResponce";
+import type { FullMovieResponce } from "../movieResponce";
 import { MovieImpl } from "./movieImpl";
 
 
 export class FullMovieImpl extends MovieImpl implements FullMovie {
   // #region Protected variables
-  protected _actors: string[];
-  protected _awards: string;
+  protected _actors: string[] = [];
+  protected _awards!: string;
   protected _boxOffice: number | undefined;
-  protected _country: string;
+  protected _country!: string;
   protected _dvd: Date | undefined;
-  protected _director: string;
-  protected _genre: MovieGenre[];
-  protected _language: MovieLanguage;
+  protected _director!: string;
+  protected _genre: MovieGenre[] = [];
+  protected _language: MovieLanguage = MovieLanguage.ENGLISH;
   protected _released: Date | undefined;
-  protected _imdbVotes: number;
-  protected _imdbRating: number;
-  protected _writers: string[];
-  protected _website: string;
-  protected _runtime: number;
-  protected _response: boolean;
-  protected _ratings: MovieRating[];
+  protected _imdbVotes!: number;
+  protected _imdbRating!: number;
+  protected _writers: string[] = [];
+  protected _website!: string;
+  protected _runtime!: number;
+  protected _response = false;
+  protected _ratings: MovieRating[] = [];
   protected _rated: MovieRated | undefined;
-  protected _production: string;
-  protected _plot: string;
+  protected _production!: string;
+  protected _plot!: string;
   protected _metascore: number | undefined;
   // #endregion
 
@@ -73,7 +73,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._production;
   }
 
-  public get rated(): MovieRated {
+  public get rated(): MovieRated | undefined {
     return this._rated;
   }
 
@@ -119,7 +119,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }
     }
     catch (e) {
-      throw new Error(`Error "actors". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "actors". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -143,7 +144,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }
       this._country = value;
     } catch (e) {
-      throw new Error(`Error "title". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "title". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -151,7 +153,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       this._dvd = value !== undefined ? new Date(value) : undefined;
     } catch (e) {
-      throw new Error(`Error "DVD". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "DVD". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -162,7 +165,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }
       this._director = value;
     } catch (e) {
-      throw new Error(`Error "director". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "director". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -174,7 +178,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }, []);
       this._genre = genres;
     } catch (e) {
-      throw new Error(`Error "genre". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "genre". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -182,7 +187,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       this._language = MovieLanguage[value];
     } catch (e) {
-      throw new Error(`Error "language". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "language". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -190,7 +196,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       this._metascore = Number.parseInt(value);
     } catch (e) {
-      throw new Error(`Error "metascore". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "metascore". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -201,7 +208,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }
       this._plot = value;
     } catch (e) {
-      throw new Error(`Error "plot". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "plot". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -212,7 +220,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }
       this._production = value;
     } catch (e) {
-      throw new Error(`Error "production". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "production". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -228,7 +237,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
         throw new Error('rated is undefined')
       }
     } catch (e) {
-      throw new Error(`Error "rated". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "rated". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -243,7 +253,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
         return acc;
       }, []);
     } catch (e) {
-      throw new Error(`Error "ratings". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "ratings". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -251,7 +262,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       this._released = value !== undefined ? new Date(value) : undefined;
     } catch (e) {
-      throw new Error(`Error "released". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "released". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -259,7 +271,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       this._response = Boolean(value);
     } catch (e) {
-      throw new Error(`Error "response". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "response". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -267,7 +280,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       this._runtime = Number.parseInt(value);
     } catch (e) {
-      throw new Error(`Error "runtime". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "runtime". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -278,7 +292,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }
       this._website = value;
     } catch (e) {
-      throw new Error(`Error "website". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "website". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -289,7 +304,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       }
       this._writers = value.split(',').map((item) => item.trim());
     } catch (e) {
-      throw new Error(`Error "writers". Value = ${value}\n${e.message}`)
+      if (e instanceof Error)
+        throw new Error(`Error "writers". Value = ${value}\n${e.message}`)
     }
   }
 
@@ -297,7 +313,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     try {
       this._imdbRating = Number.parseFloat(value);
     } catch (e) {
-      throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
     }
   }
 
@@ -306,7 +323,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       const imdbVotes = Number.parseFloat(value.replace(/,/g, ''));
       this._imdbVotes = imdbVotes;
     } catch (e) {
-      throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
+      if (e instanceof Error)
+        throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
     }
   }
   // #endregion

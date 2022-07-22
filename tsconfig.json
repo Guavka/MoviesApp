@@ -1,7 +1,8 @@
 {
   "extends": "@vue/tsconfig/tsconfig.node.json",
   "include": [
-    "cypress.config.*",
+    "vite.config.ts",
+    "cypress.config.ts",
     "env.d.ts",
     "src/App.vue",
     "src/main.ts",
@@ -10,12 +11,22 @@
     "src/components/**/*.vue",
     "configs/autoImport/**/*.ts"
   ],
+  "exclude": [
+    "src/**/__tests__/*"
+  ],
   "compilerOptions": {
+    "composite": true,
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./src/*"
       ]
     },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+    ],
     "types": [
       "vite/client",
       "element-plus/global",

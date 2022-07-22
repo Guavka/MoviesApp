@@ -15,10 +15,9 @@ import IconsResolver from 'unplugin-icons/resolver';
 import Inspect from 'vite-plugin-inspect';
 
 
-const srcURL = new URL('src', import.meta.url)
+const srcURL = new URL('./src', import.meta.url)
 const srcPath = fileURLToPath(new URL('src', import.meta.url))
 const autoImportPath = fileURLToPath(new URL('configs/autoImport', srcURL))
-
 
 // https://vitejs.dev/config/
 export default defineConfig({

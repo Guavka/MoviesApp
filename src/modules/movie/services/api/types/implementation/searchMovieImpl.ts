@@ -1,13 +1,13 @@
-import { Movie } from "@/modules/movie/types/movie";
-import { SearchMovie } from "@/modules/movie/types/searchMovie";
-import { MovieResponce, SearchMovieResponce } from "../movieResponce";
+import type { Movie } from "@/modules/movie/types/movie";
+import type { SearchMovie } from "@/modules/movie/types/searchMovie";
+import type { MovieResponce, SearchMovieResponce } from "../movieResponce";
 import { MovieImpl } from "./movieImpl";
 
 export class SearchMovieImpl implements SearchMovie {
   // #region Protected variables
-  protected _search: Movie[]
-  protected _totalResults: number
-  protected _response: boolean
+  protected _search!: Movie[];
+  protected _totalResults!: number;
+  protected _response!: boolean;
   // #endregion
 
   // #region Public Getters  
@@ -27,14 +27,16 @@ export class SearchMovieImpl implements SearchMovie {
     try {
       this._totalResults = Number.parseInt(value);
     } catch (e) {
-      throw new Error(`Error "total results". Value = ${value}\n` + e.message);
+      if (e instanceof Error)
+        throw new Error(`Error "total results". Value = ${value}\n${e.message}`);
     }
   }
   protected setResponse(value: string) {
     try {
       this._response = Boolean(value);
     } catch (e) {
-      throw new Error(`Error "response". Value = ${value}\n` + e.message);
+      if (e instanceof Error)
+        throw new Error(`Error "response". Value = ${value}\n${e.message}`);
     }
   }
   protected setSearch(value: MovieResponce[]) {
@@ -45,7 +47,8 @@ export class SearchMovieImpl implements SearchMovie {
       })
       this._search = result
     } catch (e) {
-      throw new Error(`Error "search". Value = ${value}\n` + e.message);
+      if (e instanceof Error)
+        throw new Error(`Error "search". Value = ${value}\n${e.message}`);
     }
   }
   // #endregion

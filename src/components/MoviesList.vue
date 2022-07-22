@@ -16,13 +16,13 @@
 </template>
 
 <script setup lang="ts">
-import { FullMovie } from '@/modules/movie/types/fullMovie';
+import type { FullMovie } from '@/modules/movie/types/fullMovie';
 
-interface Props {
+export interface Prop {
   list: Record<string, FullMovie>
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Prop>()
 const isExist = computed(() => Object.keys(props.list).length)
 </script>
 

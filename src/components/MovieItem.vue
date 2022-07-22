@@ -10,7 +10,7 @@
 
 <script setup lang="ts">
 import type { FullMovie } from '@/modules/movie/types/fullMovie';
-interface Prop {
+export interface Prop {
   movie: FullMovie
 }
 const props = defineProps<Prop>()
