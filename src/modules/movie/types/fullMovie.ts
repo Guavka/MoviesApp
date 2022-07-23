@@ -1,5 +1,5 @@
 import type { Movie } from "./movie";
-import type { MovieGenre, MovieLanguage, MovieRated } from "./movieEnums";
+import type { MovieCountry, MovieGenre, MovieLanguage, MovieRated } from "./movieEnums";
 
 export interface MovieRating {
   Source: string,
@@ -10,11 +10,11 @@ export interface FullMovie extends Movie {
   get actors(): string[] | undefined
   get awards(): string | undefined
   get boxOffice(): number | undefined
-  get country(): string | undefined
+  get country(): MovieCountry[] | undefined
   get dvd(): Date | undefined
   get director(): string | undefined
   get genre(): MovieGenre[] | undefined
-  get language(): MovieLanguage | undefined
+  get language(): MovieLanguage[] | undefined
   get released(): Date | undefined
   get imdbVotes(): number | undefined
   get imdbRating(): number | undefined

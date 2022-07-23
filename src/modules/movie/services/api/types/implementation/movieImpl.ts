@@ -51,7 +51,7 @@ export class MovieImpl implements Movie {
   }
 
   protected setType(value: string) {
-    this._type = <MovieType | undefined>Parser.GetValidEnumValue(value, MovieType, 'Movie type')
+    this._type = MovieType[value.toUpperCase() as keyof typeof MovieType]
   }
 
   protected setYear(value: string) {

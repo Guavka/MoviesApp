@@ -1,5 +1,5 @@
 import type { FullMovie, MovieRating } from "@/modules/movie/types/fullMovie";
-import { MovieGenre, MovieLanguage, MovieRated } from "@/modules/movie/types/movieEnums";
+import { MovieCountry, MovieGenre, MovieLanguage, MovieRated } from "@/modules/movie/types/movieEnums";
 import Parser from "@/modules/utils/parser";
 import type { FullMovieResponce } from "../movieResponce";
 import { MovieImpl } from "./movieImpl";
@@ -10,11 +10,11 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   protected _actors!: string[] | undefined;
   protected _awards!: string | undefined;
   protected _boxOffice!: number | undefined;
-  protected _country!: string | undefined;
+  protected _country!: MovieCountry[] | undefined;
   protected _dvd!: Date | undefined;
   protected _director!: string | undefined;
   protected _genre!: MovieGenre[] | undefined;
-  protected _language!: MovieLanguage | undefined;
+  protected _language!: MovieLanguage[] | undefined;
   protected _released!: Date | undefined;
   protected _imdbVotes!: number | undefined;
   protected _imdbRating!: number | undefined;
@@ -42,7 +42,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._boxOffice;
   }
 
-  public get country(): string | undefined {
+  public get country(): MovieCountry[] | undefined {
     return this._country;
   }
 
@@ -58,7 +58,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._genre;
   }
 
-  public get language(): MovieLanguage | undefined {
+  public get language(): MovieLanguage[] | undefined {
     return this._language;
   }
 
@@ -125,7 +125,13 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   }
 
   setCountry(value: string) {
-    this._awards = Parser.GetValidString(value, 'Country')
+    const result: MovieCountry[] = []
+    const countries: MovieCountry[] = value.split(',').map((item) => item.trim().replace(' ', '')).reduce((acc, el) => {
+      const enumValue = MovieCountry[el.toUpperCase() as keyof typeof MovieCountry]
+      acc.push(enumValue)
+      return acc;
+    }, result);
+    this._country = countries;
   }
 
   setDvd(value: string) {
@@ -139,7 +145,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   setGenre(value: string) {
     const result: MovieGenre[] = []
     const genres: MovieGenre[] = value.split(',').map((item) => item.trim()).reduce((acc, el) => {
-      const enumValue = <MovieGenre><unknown>Parser.GetValidEnumValue(value, MovieGenre, 'Movie genre')
+      const enumValue = MovieGenre[el.toUpperCase() as keyof typeof MovieGenre]
       acc.push(enumValue)
       return acc;
     }, result);
@@ -147,7 +153,13 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   }
 
   setLanguage(value: string) {
-    this._language = <MovieLanguage | undefined>Parser.GetValidEnumValue(value, MovieLanguage, 'Movie language')
+    const result: MovieLanguage[] = []
+    const languages: MovieLanguage[] = value.split(',').map((item) => item.trim().replace(' ', '')).reduce((acc, el) => {
+      const enumValue = MovieLanguage[el.toUpperCase() as keyof typeof MovieLanguage]
+      acc.push(enumValue)
+      return acc;
+    }, result);
+    this._language = languages;
   }
 
   setMetascore(value: string) {
@@ -163,8 +175,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   }
 
   setRated(value: string) {
-    value = value.replace(/[&\\/\\#,+()$~%.'":*?<>{}]-_/g, '')
-    this._rated = <MovieRated | undefined>Parser.GetValidEnumValue(value, MovieRated, 'Movie rated')
+    value = value.replace('-', '')
+    this._rated = MovieRated[value.toUpperCase() as keyof typeof MovieRated]
   }
 
   setRatings(value: Record<string, string>[]) {

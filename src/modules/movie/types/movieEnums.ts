@@ -1,7 +1,22 @@
+export enum MovieCountry {
+  ITALY = 'Italy',
+  SPAIN = 'Spain',
+  WESTGERMANY = 'West Germany',
+  GERMANY = 'Germany',
+  UNITEDSTATES = 'United States',
+  NEWZEALAND = 'New Zealand',
+  UNITEDKINGDOM = 'United Kingdom'
+}
+
 export enum MovieGenre {
   ACTION = 'Action',
   ADVENTURE = 'Adventure',
-  COMEDY = 'Comedy'
+  COMEDY = 'Comedy',
+  WESTERN = 'Western',
+  CRIME = 'Crime',
+  DRAMA = 'Drama',
+  BIOGRAPHY = 'Biography',
+  HISTORY = 'History'
 }
 
 export enum MovieType {
@@ -11,7 +26,20 @@ export enum MovieType {
 }
 
 export enum MovieLanguage {
-  ENGLISH = 'English'
+  ENGLISH = 'English',
+  ITALIAN = 'Italian',
+  LATIN = 'Latin',
+  SPANISH = 'Spanish',
+  SICILIAN = 'Sicilian',
+  HEBREW = 'Hebrew',
+  GERMAN = 'German',
+  POLISH = 'Polish',
+  ROMANCE = 'Romance',
+  FRENCH = 'French',
+  SINDARIN = 'Sindarin',
+  QUENYA = 'Quenya',
+  OLDENGLISH = 'Old English',
+  MANDARIN = 'Mandarin'
 }
 
 export enum MovieRated {

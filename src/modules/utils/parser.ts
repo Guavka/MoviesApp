@@ -27,12 +27,6 @@ export default class Parser {
     })
   }
 
-  public static GetValidEnumValue<T extends { [name: string]: any }>(value: string, enumObject: T, message: string,) {
-    return Parser.validate<T>(value, message, () => {
-      return enumObject[enumObject[value.toUpperCase()]];
-    })
-  }
-
   public static GetValidDate(value: string, message: string): Date | undefined {
     return Parser.validate<Date>(value, message, () => { return new Date(value); })
   }
