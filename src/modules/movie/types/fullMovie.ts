@@ -2,30 +2,30 @@ import type { Movie } from "./movie";
 import type { MovieGenre, MovieLanguage, MovieRated } from "./movieEnums";
 
 export interface MovieRating {
-  source: string,
-  value: string
+  Source: string,
+  Value: string
 }
 
 export interface FullMovie extends Movie {
-  get actors(): string[]
-  get awards(): string
+  get actors(): string[] | undefined
+  get awards(): string | undefined
   get boxOffice(): number | undefined
-  get country(): string
+  get country(): string | undefined
   get dvd(): Date | undefined
-  get director(): string
-  get genre(): MovieGenre[]
-  get language(): MovieLanguage
+  get director(): string | undefined
+  get genre(): MovieGenre[] | undefined
+  get language(): MovieLanguage | undefined
   get released(): Date | undefined
-  get imdbVotes(): number
-  get imdbRating(): number
-  get writers(): string[]
-  get website(): string
-  get runtime(): number
-  get response(): boolean
-  get ratings(): MovieRating[]
+  get imdbVotes(): number | undefined
+  get imdbRating(): number | undefined
+  get writers(): string[] | undefined
+  get website(): URL | undefined
+  get runtime(): number | undefined
+  get response(): boolean | undefined
+  get ratings(): MovieRating[] | undefined
   get rated(): MovieRated | undefined
-  get production(): string
-  get plot(): string
+  get production(): string | undefined
+  get plot(): string | undefined
   get metascore(): number | undefined
 }
 

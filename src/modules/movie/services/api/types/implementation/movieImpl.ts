@@ -1,37 +1,40 @@
 import { MovieType } from "@/modules/movie/types/movieEnums";
 import type { Movie } from "@/modules/movie/types/movie";
 import type { MovieResponce } from "../movieResponce";
+import Parser from "@/modules/utils/parser";
 
 export class MovieImpl implements Movie {
   // #region Protected variables
 
-  protected _title!: string;
-  protected _year!: number;
-  protected _imdbID!: string;
-  protected _type!: MovieType;
-  protected _poster!: string;
+  protected _title!: string | undefined;
+  protected _imdbID!: string | undefined;
+  protected _type!: MovieType | undefined;
+  protected _poster!: URL | undefined;
+  protected _year!: Date | undefined;
 
   // #endregion
 
   // #region Public Getters  
 
-  public get poster(): string {
+  public get poster(): URL | undefined {
     return this._poster;
   }
 
-  public get title(): string {
+  public get title(): string | undefined {
     return this._title;
   }
 
-  public get type(): MovieType {
+  public get type(): MovieType | undefined {
     return this._type;
   }
 
-  public get year(): number {
-    return this._year;
+  public get year(): number | undefined {
+    if (this._year)
+      return this._year.getFullYear();
+    return this._year
   }
 
-  public get imdbID(): string {
+  public get imdbID(): string | undefined {
     return this._imdbID;
   }
 
@@ -40,57 +43,23 @@ export class MovieImpl implements Movie {
   // #region Protected setters  
 
   protected setPoster(value: string) {
-    this._poster = value;
+    this._poster = Parser.GetValidUrl(value, 'Poster')
   }
 
   protected setTitle(value: string) {
-    try {
-      if (!value || value === '') {
-        throw new Error();
-      }
-      this._title = value;
-    }
-    catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "title". Value = ${value}\n${e.message}`)
-    }
+    this._title = Parser.GetValidString(value, 'Title')
   }
 
   protected setType(value: string) {
-    try {
-      value = value.toUpperCase()
-      if (value in MovieType) {
-        const index = Object.keys(MovieType).indexOf(value);
-        this._type = Object.values(MovieType)[index]
-      }
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "type". Value = ${value}\n${e.message}`);
-    }
+    this._type = <MovieType | undefined>Parser.GetValidEnumValue(value, MovieType, 'Movie type')
   }
 
   protected setYear(value: string) {
-    try {
-      let year = 0;
-      try {
-        year = Number.parseInt(value);
-      } catch {
-        throw new Error(`Error runtime`);
-      }
-      const maxYear = new Date().getFullYear() + 10;
-      if (year < 1800 || year > maxYear) {
-        throw new Error(`Error year format. Year must be in range [1800,${maxYear}]`);
-      }
-      this._year = year;
-    }
-    catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "year". Value = ${value}\n${e.message}`)
-    }
+    this._year = Parser.GetValidDate(value, 'Year')
   }
 
   protected setImdbID(value: string) {
-    this._imdbID = value;
+    this._imdbID = Parser.GetValidString(value, 'ImdbID', 9, 9);
   }
   // #endregion
 

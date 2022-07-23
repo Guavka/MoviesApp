@@ -1,10 +1,10 @@
 import type { MovieType } from './movieEnums';
 
 export interface Movie {
-  get year(): number
-  get title(): string
-  get imdbID(): string
-  get type(): MovieType
-  get poster(): string
+  get year(): number | undefined
+  get title(): string | undefined
+  get imdbID(): string | undefined
+  get type(): MovieType | undefined
+  get poster(): URL | undefined
 }
 

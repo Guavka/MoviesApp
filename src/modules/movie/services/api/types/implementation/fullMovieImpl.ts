@@ -1,39 +1,40 @@
 import type { FullMovie, MovieRating } from "@/modules/movie/types/fullMovie";
 import { MovieGenre, MovieLanguage, MovieRated } from "@/modules/movie/types/movieEnums";
+import Parser from "@/modules/utils/parser";
 import type { FullMovieResponce } from "../movieResponce";
 import { MovieImpl } from "./movieImpl";
 
 
 export class FullMovieImpl extends MovieImpl implements FullMovie {
   // #region Protected variables
-  protected _actors: string[] = [];
-  protected _awards!: string;
-  protected _boxOffice: number | undefined;
-  protected _country!: string;
-  protected _dvd: Date | undefined;
-  protected _director!: string;
-  protected _genre: MovieGenre[] = [];
-  protected _language: MovieLanguage = MovieLanguage.ENGLISH;
-  protected _released: Date | undefined;
-  protected _imdbVotes!: number;
-  protected _imdbRating!: number;
-  protected _writers: string[] = [];
-  protected _website!: string;
-  protected _runtime!: number;
-  protected _response = false;
-  protected _ratings: MovieRating[] = [];
-  protected _rated: MovieRated | undefined;
-  protected _production!: string;
-  protected _plot!: string;
-  protected _metascore: number | undefined;
+  protected _actors!: string[] | undefined;
+  protected _awards!: string | undefined;
+  protected _boxOffice!: number | undefined;
+  protected _country!: string | undefined;
+  protected _dvd!: Date | undefined;
+  protected _director!: string | undefined;
+  protected _genre!: MovieGenre[] | undefined;
+  protected _language!: MovieLanguage | undefined;
+  protected _released!: Date | undefined;
+  protected _imdbVotes!: number | undefined;
+  protected _imdbRating!: number | undefined;
+  protected _writers!: string[] | undefined;
+  protected _website!: URL | undefined;
+  protected _runtime!: number | undefined;
+  protected _response!: boolean | undefined
+  protected _ratings!: MovieRating[] | undefined;
+  protected _rated!: MovieRated | undefined;
+  protected _production!: string | undefined;
+  protected _plot!: string | undefined;
+  protected _metascore!: number | undefined;
   // #endregion
 
   // #region Public Getters
-  public get actors(): string[] {
+  public get actors(): string[] | undefined {
     return this._actors;
   }
 
-  public get awards(): string {
+  public get awards(): string | undefined {
     return this._awards;
   }
 
@@ -41,7 +42,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._boxOffice;
   }
 
-  public get country(): string {
+  public get country(): string | undefined {
     return this._country;
   }
 
@@ -49,15 +50,15 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._dvd;
   }
 
-  public get director(): string {
+  public get director(): string | undefined {
     return this._director;
   }
 
-  public get genre(): MovieGenre[] {
+  public get genre(): MovieGenre[] | undefined {
     return this._genre;
   }
 
-  public get language(): MovieLanguage {
+  public get language(): MovieLanguage | undefined {
     return this._language;
   }
 
@@ -65,11 +66,11 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._metascore;
   }
 
-  public get plot(): string {
+  public get plot(): string | undefined {
     return this._plot;
   }
 
-  public get production(): string {
+  public get production(): string | undefined {
     return this._production;
   }
 
@@ -77,7 +78,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._rated;
   }
 
-  public get ratings(): MovieRating[] {
+  public get ratings(): MovieRating[] | undefined {
     return this._ratings;
   }
 
@@ -85,172 +86,85 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
     return this._released;
   }
 
-  public get response(): boolean {
+  public get response(): boolean | undefined {
     return this._response;
   }
 
-  public get runtime(): number {
+  public get runtime(): number | undefined {
     return this._runtime;
   }
 
-  public get website(): string {
+  public get website(): URL | undefined {
     return this._website;
   }
 
-  public get writers(): string[] {
+  public get writers(): string[] | undefined {
     return this._writers;
   }
 
-  public get imdbRating(): number {
+  public get imdbRating(): number | undefined {
     return this._imdbRating;
   }
 
-  public get imdbVotes(): number {
+  public get imdbVotes(): number | undefined {
     return this._imdbVotes;
   }
   // #endregion
 
   // #region protected setters
   setActors(value: string) {
-    try {
-      this._actors = value.split(',').map((item) => item.trim());
-      if (this._actors.length == 0) {
-        throw new Error('actors is empty');
-      }
-    }
-    catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "actors". Value = ${value}\n${e.message}`)
-    }
+    this._actors = Parser.GetValidStringArray(value, 'Actors')
   }
 
   setAwards(value: string) {
-    this._awards = value;
+    this._awards = Parser.GetValidString(value, 'Awards')
   }
 
   setBoxOffice(value: string) {
-    try {
-      value = value.split('$')[1];
-      this._boxOffice = Number.parseInt(value.replace(/,/g, ''));
-    } catch {
-      this._boxOffice = undefined;
-    }
+    this._boxOffice = Parser.GetValidPositiveInt(value, 'Box office')
   }
 
   setCountry(value: string) {
-    try {
-      if (value === '') {
-        throw new Error()
-      }
-      this._country = value;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "title". Value = ${value}\n${e.message}`)
-    }
+    this._awards = Parser.GetValidString(value, 'Country')
   }
 
   setDvd(value: string) {
-    try {
-      this._dvd = value !== undefined ? new Date(value) : undefined;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "DVD". Value = ${value}\n${e.message}`)
-    }
+    this._dvd = Parser.GetValidDate(value, 'DVD')
   }
 
   setDirector(value: string) {
-    try {
-      if (value === '') {
-        throw new Error()
-      }
-      this._director = value;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "director". Value = ${value}\n${e.message}`)
-    }
+    this._director = Parser.GetValidString(value, 'Director')
   }
 
   setGenre(value: string) {
-    try {
-      const result: MovieGenre[] = []
-      const genres: MovieGenre[] = value.split(',').map((item) => item.trim()).reduce((acc, el) => {
-        if (el.toUpperCase() in MovieGenre) {
-          const index = Object.keys(MovieGenre).indexOf(el.toUpperCase());
-          const genre = Object.values(MovieGenre)[index]
-          acc.push(genre)
-        }
-        return acc;
-      }, result);
-      this._genre = genres;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "genre". Value = ${value}\n${e.message}`);
-    }
+    const result: MovieGenre[] = []
+    const genres: MovieGenre[] = value.split(',').map((item) => item.trim()).reduce((acc, el) => {
+      const enumValue = <MovieGenre><unknown>Parser.GetValidEnumValue(value, MovieGenre, 'Movie genre')
+      acc.push(enumValue)
+      return acc;
+    }, result);
+    this._genre = genres;
   }
 
   setLanguage(value: string) {
-    try {
-      if (value.toUpperCase() in MovieLanguage) {
-        const index = Object.keys(MovieLanguage).indexOf(value.toUpperCase());
-        this._language = Object.values(MovieLanguage)[index]
-      }
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "language". Value = ${value}\n${e.message}`);
-    }
+    this._language = <MovieLanguage | undefined>Parser.GetValidEnumValue(value, MovieLanguage, 'Movie language')
   }
 
   setMetascore(value: string) {
-    try {
-      this._metascore = Number.parseInt(value);
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "metascore". Value = ${value}\n${e.message}`);
-    }
+    this._metascore = Parser.GetValidPositiveInt(value, 'Metasctore')
   }
 
   setPlot(value: string) {
-    try {
-      if (value === '') {
-        throw new Error()
-      }
-      this._plot = value;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "plot". Value = ${value}\n${e.message}`)
-    }
+    this._plot = Parser.GetValidString(value, 'Plot', 25, 5000)
   }
 
   setProduction(value: string) {
-    try {
-      if (value === '') {
-        throw new Error()
-      }
-      this._production = value;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "production". Value = ${value}\n${e.message}`)
-    }
+    this._production = Parser.GetValidString(value, 'Production')
   }
 
   setRated(value: string) {
-    try {
-      if (value.toLowerCase() === 'n/a') {
-        this._rated = undefined
-        return
-      }
-      const simpleValue = value.replace('-', '');
-      if (simpleValue.toUpperCase() in MovieLanguage) {
-        const index = Object.keys(MovieRated).indexOf(simpleValue.toUpperCase());
-        this._rated = Object.values(MovieRated)[index]
-      }
-      if (!this._rated) {
-        throw new Error('rated is undefined')
-      }
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "rated". Value = ${value}\n${e.message}`);
-    }
+    value = value.replace(/[&\\/\\#,+()$~%.'":*?<>{}]-_/g, '')
+    this._rated = <MovieRated | undefined>Parser.GetValidEnumValue(value, MovieRated, 'Movie rated')
   }
 
   setRatings(value: Record<string, string>[]) {
@@ -258,8 +172,8 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
       const result: MovieRating[] = []
       this._ratings = value.reduce((acc, el) => {
         const obj: MovieRating = {
-          source: el.Source,
-          value: el.Value,
+          Source: el.Source,
+          Value: el.Value,
         };
         acc.push(obj);
         return acc;
@@ -271,12 +185,7 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   }
 
   setReleased(value: string) {
-    try {
-      this._released = value !== undefined ? new Date(value) : undefined;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "released". Value = ${value}\n${e.message}`);
-    }
+    this._released = Parser.GetValidDate(value, 'Released')
   }
 
   setResponse(value: string) {
@@ -289,55 +198,23 @@ export class FullMovieImpl extends MovieImpl implements FullMovie {
   }
 
   setRuntime(value: string) {
-    try {
-      this._runtime = Number.parseInt(value);
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "runtime". Value = ${value}\n${e.message}`);
-    }
+    this._runtime = Parser.GetValidPositiveInt(value, 'Runtime')
   }
 
   setWebsite(value: string) {
-    try {
-      if (value === '') {
-        throw new Error()
-      }
-      this._website = value;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "website". Value = ${value}\n${e.message}`)
-    }
+    this._website = Parser.GetValidUrl(value, 'Website')
   }
 
   setWriters(value: string) {
-    try {
-      if (value === '') {
-        throw new Error()
-      }
-      this._writers = value.split(',').map((item) => item.trim());
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "writers". Value = ${value}\n${e.message}`)
-    }
+    this._writers = Parser.GetValidStringArray(value, 'Writers')
   }
 
   setImdbRating(value: string) {
-    try {
-      this._imdbRating = Number.parseFloat(value);
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
-    }
+    this._imdbRating = Parser.GetValidPositiveFloat(value, 'Rating')
   }
 
   setImdbVotes(value: string) {
-    try {
-      const imdbVotes = Number.parseFloat(value.replace(/,/g, ''));
-      this._imdbVotes = imdbVotes;
-    } catch (e) {
-      if (e instanceof Error)
-        throw new Error(`Error "imdbRating". Value = ${value}\n${e.message}`);
-    }
+    this._imdbVotes = Parser.GetValidPositiveFloat(value, 'ImdbVotes')
   }
   // #endregion
 
