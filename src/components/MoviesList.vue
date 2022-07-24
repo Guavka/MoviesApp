@@ -3,8 +3,8 @@
     <h3 class="list-title">IMDB Top 250</h3>
     <ElRow :gutter="50" justify="center">
       <template v-if="isExist">
-        <ElCol :xs="22" :sm="8" :md="8" :lg="6" :xl="6" v-for="(movie, key) in list" :key="key">
-          <MovieItem :movie="list[key]">
+        <ElCol :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(movie, key) in list" :key="key">
+          <MovieItem :movie="movie" @mouseover="onMouseOver(movie.poster)">
           </MovieItem>
         </ElCol>
       </template>
@@ -23,7 +23,16 @@ export interface Prop {
 }
 
 const props = defineProps<Prop>()
+const emit = defineEmits<{
+  (e: 'changePoster', poster: URL): void
+}>();
 const isExist = computed(() => Object.keys(props.list).length)
+
+function onMouseOver(poster: URL | undefined) {
+  if (poster !== undefined) {
+    emit('changePoster', <URL>poster);
+  }
+}
 </script>
 
 <style scoped lang="scss">

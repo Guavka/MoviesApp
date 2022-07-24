@@ -70,7 +70,6 @@ const posterBg = computed(() => {
 
       .movie-info-text {
         height: 90%;
-        color: #fff;
         display: flex;
         flex-direction: column;
 
@@ -80,7 +79,8 @@ const posterBg = computed(() => {
         }
 
         .short-desc {
-          padding: 5px;
+          padding: 10px;
+          padding-right: 20px;
           text-align: justify;
         }
       }

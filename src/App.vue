@@ -1,16 +1,21 @@
 <script setup lang="ts">
 import { useMoviesStore } from './modules/movie/store/movies';
 
+const posterBG = ref('')
 
 const store = useMoviesStore()
 store.fetchMovies()
+
+function onChangePoster(poster: URL) {
+  posterBG.value = poster.toString()
+}
 </script>
 
 <template>
   <div id="app">
-    <PosterBg />
+    <PosterBg :poster="posterBG" />
     <ElMain class="container">
-      <MoviesList :list="store.movies" />
+      <MoviesList :list="store.movies" @change-poster="onChangePoster" />
     </ElMain>
   </div>
 </template>
@@ -21,6 +26,7 @@ store.fetchMovies()
 
   .container {
     font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
   }
 }
 </style>
