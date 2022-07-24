@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { useMoviesStore } from './modules/movie/store/movies';
 
-const posterBG = ref('')
-
 const store = useMoviesStore()
 store.fetchMovies()
+
+const posterBG = ref('')
+const currentPage = ref(1)
+const moviesPerPage = ref(12)
+const maxPages = ref(store.top250IDs.length)
 
 function onChangePoster(poster: URL) {
   posterBG.value = poster.toString()
@@ -16,6 +19,7 @@ function onChangePoster(poster: URL) {
     <PosterBg :poster="posterBG" />
     <ElMain class="container">
       <MoviesList :list="store.movies" @change-poster="onChangePoster" />
+      <MoviesPagination :current-page="currentPage" :max-movies="maxPages" :movies-per-page="moviesPerPage" />
     </ElMain>
   </div>
 </template>
@@ -27,6 +31,8 @@ function onChangePoster(poster: URL) {
   .container {
     font-family: Arial, Helvetica, sans-serif;
     color: #fff;
+    display: flex;
+    flex-direction: column;
   }
 }
 </style>

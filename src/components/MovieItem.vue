@@ -6,8 +6,8 @@
         <div class="movie-info-text">
           <h3 class="movie-title">{{ movie.title }}</h3>
           <span class="movie-year">{{ movie.year }}</span>
-          <ElScrollbar>
-            <p class="short-desc">{{ movie.plot }}</p>
+          <ElScrollbar class="short-desc">
+            <p>{{ movie.plot }}</p>
           </ElScrollbar>
         </div>
         <ElButtonGroup size="large" class="buttons-wrap" type="info">
@@ -79,7 +79,7 @@ const posterBg = computed(() => {
         }
 
         .short-desc {
-          padding: 10px;
+          padding: 12px;
           padding-right: 20px;
           text-align: justify;
         }
