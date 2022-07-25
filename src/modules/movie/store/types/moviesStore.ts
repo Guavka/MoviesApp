@@ -6,3 +6,7 @@ export interface MoviesState {
   currentPage: number,
   movies: Record<string, FullMovie>
 }
+
+export interface LoaderState {
+  isShowLoader: boolean
+}

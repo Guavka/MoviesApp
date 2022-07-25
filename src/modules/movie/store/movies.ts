@@ -1,9 +1,10 @@
 import type { MoviesState } from "./types/moviesStore";
-import mock from "./mock";
+import mock from "./mock/mock";
 import MovieApi from "../services/api/movieApi";
 import type { FullMovie } from "../types/fullMovie";
 import type { IdMovieParams } from "../services/api/types/movieApiSettings";
 import { MoviePlot } from "../types/movieEnums";
+import { useLoaderStore } from "./loader";
 
 const moviesPerPage = Number.parseInt(import.meta.env.VITE_APP_MOVIES_PER_PAGE)
 
@@ -23,7 +24,9 @@ export const useMoviesStore = defineStore('movies', {
   },
   actions: {
     async fetchMovies() {
+      const loaderStore = useLoaderStore()
       try {
+        loaderStore.toggleLoader(true)
         const { currentPage, moviesPerPage } = this
         const from = currentPage * moviesPerPage - moviesPerPage
         const to = currentPage * moviesPerPage
@@ -49,6 +52,9 @@ export const useMoviesStore = defineStore('movies', {
         if (e instanceof Error)
           throw new Error('fetchMovies\n' + e.message)
       }
+      finally {
+        loaderStore.toggleLoader(false)
+      }
     },
     async changePage(page: number) {
       this.currentPage = page
@@ -56,6 +62,11 @@ export const useMoviesStore = defineStore('movies', {
     },
     async changePageSize(count: number) {
       this.moviesPerPage = count
+      this.fetchMovies()
+    },
+    async removeMovie(id: string) {
+      const index = this.top250IDs.indexOf(id)
+      this.top250IDs.splice(index, 1)
       this.fetchMovies()
     }
   },

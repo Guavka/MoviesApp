@@ -4,7 +4,7 @@
     <ElRow :gutter="50" justify="center">
       <template v-if="isExist">
         <ElCol :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(movie, key) in list" :key="key">
-          <MovieItem :movie="movie" @mouseover="onMouseOver(movie.poster)">
+          <MovieItem :movie="movie" @mouseover="onMouseOver(movie.poster)" @remove-movie="onRemoveMovie">
           </MovieItem>
         </ElCol>
       </template>
@@ -16,7 +16,9 @@
 </template>
 
 <script setup lang="ts">
+import { useMoviesStore } from '@/modules/movie/store/movies';
 import type { FullMovie } from '@/modules/movie/types/fullMovie';
+import Delete from '~icons/ep/delete'
 
 export interface Prop {
   list: Record<string, FullMovie>
@@ -30,8 +32,25 @@ const isExist = computed(() => Object.keys(props.list).length)
 
 function onMouseOver(poster: URL | undefined) {
   if (poster !== undefined) {
-    emit('changePoster', <URL>poster);
+    emit('changePoster', <URL>poster)
   }
+}
+function onRemoveMovie(id: string, title: string) {
+  ElMessageBox.confirm(
+    `Are you sure to remove ${title}?`,
+    'Warning',
+    {
+      type: 'warning',
+      icon: markRaw(Delete),
+    })
+    .then(() => {
+      const store = useMoviesStore()
+      store.removeMovie(id)
+      ElMessage({
+        type: 'success',
+        message: 'Delete completed',
+      })
+    })
 }
 </script>
 

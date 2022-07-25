@@ -12,7 +12,7 @@
         </div>
         <ElButtonGroup size="large" class="buttons-wrap" type="info">
           <ElButton plain class="movie-btn">Edit</ElButton>
-          <ElButton plain class="movie-btn">Remove</ElButton>
+          <ElButton plain class="movie-btn" @click="onRemoveClick">Remove</ElButton>
         </ElButtonGroup>
       </div>
     </div>
@@ -25,12 +25,22 @@ export interface Prop {
   movie: FullMovie
 }
 const props = defineProps<Prop>()
+const emit = defineEmits<{
+  (e: 'removeMovie', id: string, title: string): void,
+  (e: 'updateMovie', id: string): void
+}>()
+
 const posterBg = computed(() => {
   return {
     "background-image": `url(${props.movie.poster}})`
   }
 }
 )
+
+function onRemoveClick() {
+  emit('removeMovie', props.movie.imdbID, props.movie.title)
+}
+
 </script>
 
 <style scoped lang="scss">

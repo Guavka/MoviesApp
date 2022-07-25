@@ -1,4 +1,4 @@
-import { useMoviesStore } from "./movies"
+import { useMoviesStore } from "../movies"
 
 describe('test movies store', () => {
   beforeEach(() => {

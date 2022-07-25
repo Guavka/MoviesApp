@@ -14,8 +14,6 @@ if (route.query.page) {
 const posterBG = ref('')
 const moviesCount = ref(store.top250IDs.length)
 
-watch(route.query, onPageQueryChange)
-
 function onChangePoster(poster: URL) {
   posterBG.value = poster.toString()
 }
@@ -28,13 +26,10 @@ function onUpdateCurrentPage(page: number) {
 function onUpdatePageSize(size: number) {
   store.changePageSize(size)
 }
-
-function onPageQueryChange({ page = 1 }) {
-  onUpdateCurrentPage(Number(page))
-}
 </script>
 
 <template>
+  <MoviesLoader :duration="2" loader-color="lightgray" :persentage="100" />
   <PosterBg :poster="posterBG" />
   <ElMain class="container">
     <MoviesList :list="store.movies" @change-poster="onChangePoster" />
