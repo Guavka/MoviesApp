@@ -1,44 +1,15 @@
 <script setup lang="ts">
-import { useMoviesStore } from './modules/movie/store/movies';
 
-const store = useMoviesStore()
-store.fetchMovies()
-
-const posterBG = ref('')
-const moviesCount = ref(store.top250IDs.length)
-
-function onChangePoster(poster: URL) {
-  posterBG.value = poster.toString()
-}
-function onUpdateCurrentPage(page: number) {
-  store.changePage(page)
-}
-function onUpdatePageSize(size: number) {
-  store.changePageSize(size)
-}
 </script>
 
 <template>
   <div id="app">
-    <PosterBg :poster="posterBG" />
-    <ElMain class="container">
-      <MoviesList :list="store.movies" @change-poster="onChangePoster" />
-      <MoviesPagination :current-page="store.currentPage" :max-movies="moviesCount"
-        :movies-per-page="store.moviesPerPage" @update-current-page="onUpdateCurrentPage"
-        @update-page-size="onUpdatePageSize" />
-    </ElMain>
+    <RouterView />
   </div>
 </template>
 
 <style scoped lang="scss">
 #app {
   position: relative;
-
-  .container {
-    font-family: Arial, Helvetica, sans-serif;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-  }
 }
 </style>

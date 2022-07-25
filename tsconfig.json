@@ -6,15 +6,18 @@
     "env.d.ts",
     "src/App.vue",
     "src/main.ts",
+    "src/router/**/*.ts",
     "src/modules/**/*.ts",
     "src/plugins/**/*.ts",
     "src/components/**/*.vue",
+    "src/views/**/*.vue",
     "configs/autoImport/**/*.ts"
   ],
   "exclude": [
     "src/**/__tests__/*"
   ],
   "compilerOptions": {
+    "strict": false,
     "sourceMap": true,
     "composite": true,
     "baseUrl": ".",

@@ -20,5 +20,7 @@ declare module '@vue/runtime-core' {
     MoviesList: typeof import('./../../src/components/MoviesList.vue')['default']
     MoviesPagination: typeof import('./../../src/components/MoviesPagination.vue')['default']
     PosterBg: typeof import('./../../src/components/PosterBg.vue')['default']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
   }
 }
