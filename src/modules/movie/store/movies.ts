@@ -5,9 +5,11 @@ import type { FullMovie } from "../types/fullMovie";
 import type { IdMovieParams } from "../services/api/types/movieApiSettings";
 import { MoviePlot } from "../types/movieEnums";
 
+const moviesPerPage = Number.parseInt(import.meta.env.VITE_APP_MOVIES_PER_PAGE)
+
 const moviesState: MoviesState = {
   top250IDs: mock,
-  moviesPerPage: import.meta.env.VITE_APP_MOVIES_PER_PAGE,
+  moviesPerPage: moviesPerPage,
   currentPage: 1,
   movies: <Record<string, FullMovie>>{}
 }
@@ -37,7 +39,9 @@ export const useMoviesStore = defineStore('movies', {
         const response = await Promise.all(requests)
 
         this.movies = response.reduce((acc, el) => {
-          acc[el.imdbID] = el
+          if (el.imdbID !== undefined) {
+            acc[el.imdbID] = el
+          }
           return acc
         }, <Record<string, FullMovie>>{})
       }
@@ -45,6 +49,14 @@ export const useMoviesStore = defineStore('movies', {
         if (e instanceof Error)
           throw new Error('fetchMovies\n' + e.message)
       }
+    },
+    async changePage(page: number) {
+      this.currentPage = page
+      this.fetchMovies()
+    },
+    async changePageSize(count: number) {
+      this.moviesPerPage = count
+      this.fetchMovies()
     }
   },
 });

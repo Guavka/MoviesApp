@@ -5,12 +5,16 @@ const store = useMoviesStore()
 store.fetchMovies()
 
 const posterBG = ref('')
-const currentPage = ref(1)
-const moviesPerPage = ref(12)
-const maxPages = ref(store.top250IDs.length)
+const moviesCount = ref(store.top250IDs.length)
 
 function onChangePoster(poster: URL) {
   posterBG.value = poster.toString()
+}
+function onUpdateCurrentPage(page: number) {
+  store.changePage(page)
+}
+function onUpdatePageSize(size: number) {
+  store.changePageSize(size)
 }
 </script>
 
@@ -19,7 +23,9 @@ function onChangePoster(poster: URL) {
     <PosterBg :poster="posterBG" />
     <ElMain class="container">
       <MoviesList :list="store.movies" @change-poster="onChangePoster" />
-      <MoviesPagination :current-page="currentPage" :max-movies="maxPages" :movies-per-page="moviesPerPage" />
+      <MoviesPagination :current-page="store.currentPage" :max-movies="moviesCount"
+        :movies-per-page="store.moviesPerPage" @update-current-page="onUpdateCurrentPage"
+        @update-page-size="onUpdatePageSize" />
     </ElMain>
   </div>
 </template>
