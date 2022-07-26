@@ -7,6 +7,10 @@
 body {
   height: 100vh;
   position: relative;
+
+  .my-autocomplete .el-autocomplete-suggestion__wrap {
+    max-height: 500px !important;
+  }
 }
 
 .container {

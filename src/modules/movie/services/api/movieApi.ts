@@ -30,16 +30,16 @@ export default class MovieApi {
   public static async getMovieById(settings: IdMovieParams): Promise<FullMovie> {
     return request(settings)
       .then(result => { return parseMovieInfo(result) })
-      .catch(e => { throw new Error('getMovieById\n' + e.message) })
+      .catch(e => { throw new Error('movie-api getMovieById\n' + e) })
   }
   public static async getMovieByTitle(settings: TitleMovieParams): Promise<FullMovie> {
     return request(settings)
       .then(result => { return parseMovieInfo(result) })
-      .catch(e => { throw new Error('getMovieByTitle\n' + e.message) })
+      .catch(e => { throw new Error('movie-api getMovieByTitle\n' + e) })
   }
   public static async searchMovie(settings: SearchMovieParams) {
     return request(settings)
       .then(result => { return parseSearchMovieInfo(result) })
-      .catch(e => { throw new Error('searchMovie\n' + e.message) })
+      .catch(e => { throw new Error('movie-api searchMovie\n' + e) })
   }
 }

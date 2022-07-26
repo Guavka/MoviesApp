@@ -59,7 +59,7 @@ export class MovieImpl implements Movie {
   }
 
   protected setImdbID(value: string) {
-    this._imdbID = Parser.GetValidString(value, 'ImdbID', 9, 9);
+    this._imdbID = Parser.GetValidString(value, 'ImdbID', 9, 10);
   }
   // #endregion
 

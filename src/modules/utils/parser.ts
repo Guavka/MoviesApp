@@ -1,6 +1,6 @@
 export default class Parser {
 
-  static validate<T>(value: string, message: string, action: () => T) {
+  static validate<T>(value: string, message: string, action: () => T): T | undefined {
     try {
       return action();
     }
@@ -11,11 +11,11 @@ export default class Parser {
     }
   }
 
-  public static GetValidUrl(value: string, message: string) {
+  public static GetValidUrl(value: string, message: string): URL | undefined {
     return Parser.validate<URL>(value, message, () => { return new URL(value); })
   }
 
-  public static GetValidString(value: string, message: string, minLenght = 1, maxLenght = 128) {
+  public static GetValidString(value: string, message: string, minLenght = 1, maxLenght = 128): string | undefined {
     return Parser.validate<string>(value, message, () => {
       if (value === undefined || value === '') {
         throw new Error('Value is empty');
@@ -31,7 +31,7 @@ export default class Parser {
     return Parser.validate<Date>(value, message, () => { return new Date(value); })
   }
 
-  public static GetValidStringArray(value: string, message: string, separator = ',', minLenght = 1, maxLenght = 128) {
+  public static GetValidStringArray(value: string, message: string, separator = ',', minLenght = 1, maxLenght = 128): string[] | undefined {
     return Parser.validate<string[]>(value, message, () => {
       const array = value.split(separator).map((item) => item.trim());
       if (array.length == 0) {
@@ -42,13 +42,13 @@ export default class Parser {
     })
   }
 
-  public static GetValidPositiveInt(value: string, message: string) {
+  public static GetValidPositiveInt(value: string, message: string): number | undefined {
     return Parser.validate<number>(value, message, () => {
       const clearValue = value.replace(/[&\\/\\#,+()$~%.'":*?<>{}^A-Za-z]/g, '');
       return Number.parseInt(clearValue)
     })
   }
-  public static GetValidPositiveFloat(value: string, message: string) {
+  public static GetValidPositiveFloat(value: string, message: string): number | undefined {
     return Parser.validate<number>(value, message, () => {
       const clearValue = value.replace(/[&\\/\\#,+()$~%'":*?<>{}^A-Za-z]/g, '');
       return Number.parseFloat(clearValue)

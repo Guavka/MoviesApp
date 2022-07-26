@@ -7,11 +7,14 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
+    ElAutocomplete: typeof import('element-plus/es')['ElAutocomplete']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonGroup: typeof import('element-plus/es')['ElButtonGroup']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
+    ElInput: typeof import('element-plus/es')['ElInput']
     ElMain: typeof import('element-plus/es')['ElMain']
     ElPagination: typeof import('element-plus/es')['ElPagination']
     ElProgress: typeof import('element-plus/es')['ElProgress']
@@ -20,6 +23,7 @@ declare module '@vue/runtime-core' {
     IEpDelete: typeof import('~icons/ep/delete')['default']
     Loader: typeof import('./../../src/components/Loader.vue')['default']
     MovieItem: typeof import('./../../src/components/MovieItem.vue')['default']
+    MoviesHeader: typeof import('./../../src/components/MoviesHeader.vue')['default']
     MoviesList: typeof import('./../../src/components/MoviesList.vue')['default']
     MoviesLoader: typeof import('./../../src/components/MoviesLoader.vue')['default']
     MoviesPagination: typeof import('./../../src/components/MoviesPagination.vue')['default']

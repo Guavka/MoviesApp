@@ -3,12 +3,13 @@ import { useRoute, useRouter } from 'vue-router';
 import { useMoviesStore } from '../modules/movie/store/movies'
 
 const store = useMoviesStore()
-store.fetchMovies()
 
 const router = useRouter()
 const route = useRoute()
 if (route.query.page) {
   onUpdateCurrentPage(Number(route.query.page))
+} else {
+  store.fetchMovies()
 }
 
 const posterBG = ref('')
@@ -29,6 +30,9 @@ function onUpdatePageSize(size: number) {
 </script>
 
 <template>
+  <ElHeader class="header">
+    <MoviesHeader />
+  </ElHeader>
   <MoviesLoader :duration="2" loader-color="lightgray" :persentage="100" />
   <PosterBg :poster="posterBG" />
   <ElMain class="container">
@@ -41,6 +45,10 @@ function onUpdatePageSize(size: number) {
 </template>
 
 <style scoped lang="scss">
+.header {
+  padding: 0;
+}
+
 .container {
   font-family: Arial, Helvetica, sans-serif;
   color: #fff;

@@ -2,8 +2,8 @@ import type { MoviesState } from "./types/moviesStore";
 import mock from "./mock/mock";
 import MovieApi from "../services/api/movieApi";
 import type { FullMovie } from "../types/fullMovie";
-import type { IdMovieParams } from "../services/api/types/movieApiSettings";
-import { MoviePlot } from "../types/movieEnums";
+import type { IdMovieParams, SearchMovieParams } from "../services/api/types/movieApiSettings";
+import { MoviePlot, MovieType } from "../types/movieEnums";
 import { useLoaderStore } from "./loader";
 
 const moviesPerPage = Number.parseInt(import.meta.env.VITE_APP_MOVIES_PER_PAGE)
@@ -50,7 +50,7 @@ export const useMoviesStore = defineStore('movies', {
       }
       catch (e) {
         if (e instanceof Error)
-          throw new Error('fetchMovies\n' + e.message)
+          throw new Error('Fetch movies\n' + e.message)
       }
       finally {
         loaderStore.toggleLoader(false)
@@ -68,6 +68,26 @@ export const useMoviesStore = defineStore('movies', {
       const index = this.top250IDs.indexOf(id)
       this.top250IDs.splice(index, 1)
       this.fetchMovies()
+    },
+    async searchMovies(title: string, type?: MovieType, year?: number) {
+      const loaderStore = useLoaderStore()
+      try {
+        loaderStore.toggleLoader(true)
+        const settings: SearchMovieParams = {
+          s: title,
+          type: type,
+          y: year
+        }
+        const result = await MovieApi.searchMovie(settings)
+        return result.search
+      }
+      catch (e) {
+        if (e instanceof Error)
+          throw new Error('movies-store Search movies\n' + e)
+      }
+      finally {
+        loaderStore.toggleLoader(false)
+      }
     }
   },
 });
