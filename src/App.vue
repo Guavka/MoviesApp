@@ -5,6 +5,7 @@
 <template>
   <div id="app">
     <RouterView />
+    <MovieInfo />
   </div>
 </template>
 

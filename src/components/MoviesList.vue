@@ -5,7 +5,7 @@
       <template v-if="isExist">
         <ElCol :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(movie, key) in list" :key="key">
           <MovieItem :movie="movie" @mouseover="onMouseOver(movie.poster)" @remove-movie="onRemoveMovie"
-            @edit-movie="onShowMovieInfo">
+            @show-info="onShowMovieInfo">
           </MovieItem>
         </ElCol>
       </template>
