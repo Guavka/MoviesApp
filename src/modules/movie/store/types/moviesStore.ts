@@ -10,3 +10,8 @@ export interface MoviesState {
 export interface LoaderState {
   isShowLoader: boolean
 }
+
+export interface MovieInfoState {
+  isShowModal: boolean,
+  movie: FullMovie
+}

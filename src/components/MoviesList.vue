@@ -4,7 +4,8 @@
     <ElRow :gutter="50" justify="center">
       <template v-if="isExist">
         <ElCol :xs="24" :sm="12" :md="8" :lg="6" :xl="6" v-for="(movie, key) in list" :key="key">
-          <MovieItem :movie="movie" @mouseover="onMouseOver(movie.poster)" @remove-movie="onRemoveMovie">
+          <MovieItem :movie="movie" @mouseover="onMouseOver(movie.poster)" @remove-movie="onRemoveMovie"
+            @edit-movie="onShowMovieInfo">
           </MovieItem>
         </ElCol>
       </template>
@@ -16,6 +17,7 @@
 </template>
 
 <script setup lang="ts">
+import { useMovieInfoStore } from '@/modules/movie/store/movieInfo';
 import { useMoviesStore } from '@/modules/movie/store/movies';
 import type { FullMovie } from '@/modules/movie/types/fullMovie';
 import Delete from '~icons/ep/delete'
@@ -51,6 +53,9 @@ function onRemoveMovie(id: string, title: string) {
         message: 'Delete completed',
       })
     })
+}
+function onShowMovieInfo(movie: FullMovie) {
+  useMovieInfoStore().showModalByMovie(movie)
 }
 </script>
 

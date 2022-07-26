@@ -15,6 +15,14 @@ const moviesState: MoviesState = {
   movies: <Record<string, FullMovie>>{}
 }
 
+async function requestMovie(id: string, plot: MoviePlot) {
+  const settings: IdMovieParams = {
+    i: id,
+    plot: plot
+  }
+  return MovieApi.getMovieById(settings)
+}
+
 export const useMoviesStore = defineStore('movies', {
   state: () => moviesState,
   getters: {
@@ -23,6 +31,20 @@ export const useMoviesStore = defineStore('movies', {
     }
   },
   actions: {
+    async fetchMovie(id: string) {
+      const loaderStore = useLoaderStore()
+      try {
+        loaderStore.toggleLoader(true)
+        return await requestMovie(id, MoviePlot.FULL)
+      }
+      catch (e) {
+        if (e instanceof Error)
+          throw new Error('Fetch movie\n' + e.message)
+      }
+      finally {
+        loaderStore.toggleLoader(false)
+      }
+    },
     async fetchMovies() {
       const loaderStore = useLoaderStore()
       try {
@@ -33,11 +55,7 @@ export const useMoviesStore = defineStore('movies', {
         const idsArray: string[] = this.getSlicedIds(from, to)
 
         const requests: Promise<FullMovie>[] = idsArray.map((id: string) => {
-          const settings: IdMovieParams = {
-            i: id,
-            plot: MoviePlot.FULL
-          }
-          return MovieApi.getMovieById(settings)
+          return requestMovie(id, MoviePlot.FULL)
         })
         const response = await Promise.all(requests)
 

@@ -8,7 +8,7 @@ export const useLoaderStore = defineStore('loader', {
   state: () => loaderState,
   getters: {},
   actions: {
-    async toggleLoader(flag: boolean) {
+    toggleLoader(flag: boolean) {
       this.isShowLoader = flag
     },
   },

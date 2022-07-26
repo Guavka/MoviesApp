@@ -20,6 +20,7 @@
 </template>
 
 <script setup lang="ts">
+import { useMovieInfoStore } from '@/modules/movie/store/movieInfo';
 import { useMoviesStore } from '@/modules/movie/store/movies';
 import type { MovieType } from '@/modules/movie/types/movieEnums';
 import Parser from '@/modules/utils/parser';
@@ -71,7 +72,7 @@ const querySearchAsync = async () => {
   }
 }
 function handleSelect({ link }: any): void {
-  console.log(link)
+  useMovieInfoStore().showModalByID(link)
 }
 </script>
 

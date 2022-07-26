@@ -11,7 +11,7 @@
           </ElScrollbar>
         </div>
         <ElButtonGroup size="large" class="buttons-wrap" type="info">
-          <ElButton plain class="movie-btn">Edit</ElButton>
+          <ElButton plain class="movie-btn" @click="onEditClick">Edit</ElButton>
           <ElButton plain class="movie-btn" @click="onRemoveClick">Remove</ElButton>
         </ElButtonGroup>
       </div>
@@ -27,7 +27,7 @@ export interface Prop {
 const props = defineProps<Prop>()
 const emit = defineEmits<{
   (e: 'removeMovie', id: string, title: string): void,
-  (e: 'updateMovie', id: string): void
+  (e: 'showInfo', movie: FullMovie): void
 }>()
 
 const posterBg = computed(() => {
@@ -40,7 +40,9 @@ const posterBg = computed(() => {
 function onRemoveClick() {
   emit('removeMovie', props.movie.imdbID, props.movie.title)
 }
-
+function onEditClick() {
+  emit('showInfo', props.movie)
+}
 </script>
 
 <style scoped lang="scss">
